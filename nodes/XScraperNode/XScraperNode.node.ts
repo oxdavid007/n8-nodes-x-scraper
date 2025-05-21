@@ -123,9 +123,12 @@ export class XScraperNode implements INodeType {
 								inReplyToStatusId: INodeParameterResourceLocator;
 							};
 
-							const replyToTweetId = returnId(inReplyToStatusId);
-
 							let mediaData: { data: Uint8Array; mediaType: string }[] | undefined;
+							let replyToTweetId: string | undefined;
+
+							if (inReplyToStatusId) {
+								replyToTweetId = returnId(inReplyToStatusId);
+							}
 
 							if (mediaId) {
 								// Convert mediaId to Uint8Array and set mediaType
@@ -180,8 +183,7 @@ export class XScraperNode implements INodeType {
 						}
 
 						if (operation === 'getMessages') {
-							const userId = userData.guest_id;
-							responseData = await eliza.getMessages(userId);
+							responseData = await eliza.getMessages(userData.username);
 						}
 					}
 

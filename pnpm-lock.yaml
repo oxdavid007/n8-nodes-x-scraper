@@ -4,6 +4,9 @@ settings:
   autoInstallPeers: true
   excludeLinksFromLockfile: false
 
+overrides:
+  n8n-nodes-x-scraper: link:../../../../Library/pnpm/global/5/node_modules/n8n-nodes-x-scraper
+
 importers:
 
   .:
@@ -11,6 +14,9 @@ importers:
       agent-twitter-client:
         specifier: ^0.0.18
         version: 0.0.18
+      n8n-nodes-x-scraper:
+        specifier: link:../../../../Library/pnpm/global/5/node_modules/n8n-nodes-x-scraper
+        version: link:../../../../Library/pnpm/global/5/node_modules/n8n-nodes-x-scraper
       n8n-workflow:
         specifier: '*'
         version: 1.82.0

@@ -8,8 +8,48 @@ interface CreateTweetResponse {
 
 type DirectMessagesResponse = {
 	conversations: Array<{
-		[key: string]: any;
+		conversationId: string;
+		messages: Array<{
+			id: string;
+			text: string;
+			senderId: string;
+			recipientId: string;
+			createdAt: string;
+			mediaUrls?: string[];
+			senderScreenName?: string;
+			recipientScreenName?: string;
+		}>;
+		participants: Array<{
+			id: string;
+			screenName: string;
+		}>;
 	}>;
+	users: Array<{
+		id: string;
+		screenName: string;
+		name: string;
+		profileImageUrl: string;
+		description?: string;
+		verified?: boolean;
+		protected?: boolean;
+		followersCount?: number;
+		friendsCount?: number;
+	}>;
+	cursor?: string;
+	lastSeenEventId?: string;
+	trustedLastSeenEventId?: string;
+	untrustedLastSeenEventId?: string;
+	inboxTimelines?: {
+		trusted?: {
+			status: string;
+			minEntryId?: string;
+		};
+		untrusted?: {
+			status: string;
+			minEntryId?: string;
+		};
+	};
+	userId: string;
 };
 
 export class Eliza {
@@ -102,10 +142,11 @@ export class Eliza {
 		}
 	}
 
-	async getMessages(userId: string): Promise<DirectMessagesResponse> {
+	async getMessages(username: string): Promise<DirectMessagesResponse> {
 		const scraper = this.getRandomScraper();
 		try {
-			const rs = await scraper.getDirectMessageConversations(userId);
+			const user = await scraper.getProfile(username);
+			const rs = await scraper.getDirectMessageConversations(user.userId as string);
 			return rs;
 		} catch (error) {
 			if (error instanceof Error) {

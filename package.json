@@ -1,6 +1,6 @@
 {
   "name": "n8n-nodes-x-scraper",
-  "version": "1.0.0",
+  "version": "1.0.1",
   "description": "",
   "keywords": [
     "n8n-community-node-package"
@@ -51,6 +51,7 @@
   },
   "dependencies": {
     "agent-twitter-client": "^0.0.18",
+    "n8n-nodes-x-scraper": "link:../../../../Library/pnpm/global/5/node_modules/n8n-nodes-x-scraper",
     "twitter-api-v2": "^1.23.2"
   }
 }
