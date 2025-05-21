@@ -12,20 +12,26 @@ export const userOperations: INodeProperties[] = [
 			},
 		},
 		options: [
+			// {
+			// 	name: 'Get',
+			// 	value: 'getUser',
+			// 	description: 'Retrieve a user by username',
+			// 	action: 'Get user',
+			// },
+			// {
+			// 	name: 'Get Timeline',
+			// 	value: 'getTimeline',
+			// 	description: "Retrieve a user's timeline",
+			// 	action: 'Get user timeline',
+			// },
 			{
-				name: 'Get',
-				value: 'getUser',
-				description: 'Retrieve a user by username',
-				action: 'Get user',
-			},
-			{
-				name: 'Get Timeline',
-				value: 'getTimeline',
-				description: "Retrieve a user's timeline",
-				action: 'Get user timeline',
+				name: 'Get Messages',
+				value: 'getMessages',
+				description: "Retrieve a user's messages",
+				action: 'Get user messages',
 			},
 		],
-		default: 'getUser',
+		default: 'getMessages',
 	},
 ];
 

@@ -19,47 +19,47 @@ export const tweetOperations: INodeProperties[] = [
 				action: 'Create tweet',
 			},
 			{
-				name: 'Delete',
-				value: 'delete',
-				description: 'Delete a tweet',
-				action: 'Delete tweet',
-			},
-			{
 				name: 'Like',
 				value: 'like',
 				description: 'Like a tweet',
 				action: 'Like tweet',
 			},
-			{
-				name: 'Retweet',
-				value: 'retweet',
-				description: 'Retweet a tweet',
-				action: 'Retweet tweet',
-			},
-			{
-				name: 'Search',
-				value: 'search',
-				description: 'Search for tweets',
-				action: 'Search tweets',
-			},
-			{
-				name: 'Unlike',
-				value: 'unlike',
-				description: 'Unlike a tweet',
-				action: 'Unlike tweet',
-			},
-			{
-				name: 'Unretweet',
-				value: 'unretweet',
-				description: 'Unretweet a tweet',
-				action: 'Unretweet tweet',
-			},
-			{
-				name: 'Upload Media',
-				value: 'uploadMedia',
-				description: 'Upload media and return a media ID',
-				action: 'Upload media',
-			},
+			// {
+			// 	name: 'Delete',
+			// 	value: 'delete',
+			// 	description: 'Delete a tweet',
+			// 	action: 'Delete tweet',
+			// },
+			// {
+			// 	name: 'Retweet',
+			// 	value: 'retweet',
+			// 	description: 'Retweet a tweet',
+			// 	action: 'Retweet tweet',
+			// },
+			// {
+			// 	name: 'Search',
+			// 	value: 'search',
+			// 	description: 'Search for tweets',
+			// 	action: 'Search tweets',
+			// },
+			// {
+			// 	name: 'Unlike',
+			// 	value: 'unlike',
+			// 	description: 'Unlike a tweet',
+			// 	action: 'Unlike tweet',
+			// },
+			// {
+			// 	name: 'Unretweet',
+			// 	value: 'unretweet',
+			// 	description: 'Unretweet a tweet',
+			// 	action: 'Unretweet tweet',
+			// },
+			// {
+			// 	name: 'Upload Media',
+			// 	value: 'uploadMedia',
+			// 	description: 'Upload media and return a media ID',
+			// 	action: 'Upload media',
+			// },
 		],
 		default: 'create',
 	},
@@ -86,34 +86,6 @@ export const tweetFields: INodeProperties[] = [
 		},
 		description:
 			'The text of the status update. URLs must be encoded. Links wrapped with the t.co shortener will affect character count',
-	},
-	{
-		displayName: 'Reply to Tweet',
-		name: 'replyToTweetId',
-		type: 'string',
-		default: '',
-		required: false,
-		displayOptions: {
-			show: {
-				operation: ['create'],
-				resource: ['tweet'],
-			},
-		},
-		description: 'The tweet being replied to',
-	},
-	{
-		displayName: 'Media',
-		name: 'mediaData',
-		type: 'string',
-		default: '',
-		required: false,
-		displayOptions: {
-			show: {
-				operation: ['create'],
-				resource: ['tweet'],
-			},
-		},
-		description: 'The media to attach to the tweet',
 	},
 	{
 		displayName: 'Options',
@@ -185,38 +157,38 @@ export const tweetFields: INodeProperties[] = [
 	/* -------------------------------------------------------------------------- */
 	/*                                tweet:retweet                               */
 	/* -------------------------------------------------------------------------- */
-	{
-		displayName: 'Tweet',
-		name: 'tweetId',
-		type: 'resourceLocator',
-		default: { mode: 'id', value: '' },
-		required: true,
-		description: 'The tweet to retweet',
-		displayOptions: {
-			show: {
-				operation: ['retweet'],
-				resource: ['tweet'],
-			},
-		},
-		modes: [
-			{
-				displayName: 'By ID',
-				name: 'id',
-				type: 'string',
-				validation: [],
-				placeholder: 'e.g. 1187836157394112513',
-				url: '',
-			},
-			{
-				displayName: 'By URL',
-				name: 'url',
-				type: 'string',
-				validation: [],
-				placeholder: 'e.g. https://twitter.com/n8n_io/status/1187836157394112513',
-				url: '',
-			},
-		],
-	},
+	// {
+	// 	displayName: 'Tweet',
+	// 	name: 'tweetId',
+	// 	type: 'resourceLocator',
+	// 	default: { mode: 'id', value: '' },
+	// 	required: true,
+	// 	description: 'The tweet to retweet',
+	// 	displayOptions: {
+	// 		show: {
+	// 			operation: ['retweet'],
+	// 			resource: ['tweet'],
+	// 		},
+	// 	},
+	// 	modes: [
+	// 		{
+	// 			displayName: 'By ID',
+	// 			name: 'id',
+	// 			type: 'string',
+	// 			validation: [],
+	// 			placeholder: 'e.g. 1187836157394112513',
+	// 			url: '',
+	// 		},
+	// 		{
+	// 			displayName: 'By URL',
+	// 			name: 'url',
+	// 			type: 'string',
+	// 			validation: [],
+	// 			placeholder: 'e.g. https://twitter.com/n8n_io/status/1187836157394112513',
+	// 			url: '',
+	// 		},
+	// 	],
+	// },
 
 	/* -------------------------------------------------------------------------- */
 	/*                                tweet:like                                  */
@@ -257,187 +229,187 @@ export const tweetFields: INodeProperties[] = [
 	/* -------------------------------------------------------------------------- */
 	/*                                tweet:unlike                                */
 	/* -------------------------------------------------------------------------- */
-	{
-		displayName: 'Tweet',
-		name: 'tweetId',
-		type: 'resourceLocator',
-		default: { mode: 'id', value: '' },
-		required: true,
-		description: 'The tweet to unlike',
-		displayOptions: {
-			show: {
-				operation: ['unlike'],
-				resource: ['tweet'],
-			},
-		},
-		modes: [
-			{
-				displayName: 'By ID',
-				name: 'id',
-				type: 'string',
-				validation: [],
-				placeholder: 'e.g. 1187836157394112513',
-				url: '',
-			},
-			{
-				displayName: 'By URL',
-				name: 'url',
-				type: 'string',
-				validation: [],
-				placeholder: 'e.g. https://twitter.com/n8n_io/status/1187836157394112513',
-				url: '',
-			},
-		],
-	},
+	// {
+	// 	displayName: 'Tweet',
+	// 	name: 'tweetId',
+	// 	type: 'resourceLocator',
+	// 	default: { mode: 'id', value: '' },
+	// 	required: true,
+	// 	description: 'The tweet to unlike',
+	// 	displayOptions: {
+	// 		show: {
+	// 			operation: ['unlike'],
+	// 			resource: ['tweet'],
+	// 		},
+	// 	},
+	// 	modes: [
+	// 		{
+	// 			displayName: 'By ID',
+	// 			name: 'id',
+	// 			type: 'string',
+	// 			validation: [],
+	// 			placeholder: 'e.g. 1187836157394112513',
+	// 			url: '',
+	// 		},
+	// 		{
+	// 			displayName: 'By URL',
+	// 			name: 'url',
+	// 			type: 'string',
+	// 			validation: [],
+	// 			placeholder: 'e.g. https://twitter.com/n8n_io/status/1187836157394112513',
+	// 			url: '',
+	// 		},
+	// 	],
+	// },
 
 	/* -------------------------------------------------------------------------- */
 	/*                                tweet:unretweet                             */
 	/* -------------------------------------------------------------------------- */
-	{
-		displayName: 'Tweet',
-		name: 'tweetId',
-		type: 'resourceLocator',
-		default: { mode: 'id', value: '' },
-		required: true,
-		description: 'The tweet to unretweet',
-		displayOptions: {
-			show: {
-				operation: ['unretweet'],
-				resource: ['tweet'],
-			},
-		},
-		modes: [
-			{
-				displayName: 'By ID',
-				name: 'id',
-				type: 'string',
-				validation: [],
-				placeholder: 'e.g. 1187836157394112513',
-				url: '',
-			},
-			{
-				displayName: 'By URL',
-				name: 'url',
-				type: 'string',
-				validation: [],
-				placeholder: 'e.g. https://twitter.com/n8n_io/status/1187836157394112513',
-				url: '',
-			},
-		],
-	},
+	// {
+	// 	displayName: 'Tweet',
+	// 	name: 'tweetId',
+	// 	type: 'resourceLocator',
+	// 	default: { mode: 'id', value: '' },
+	// 	required: true,
+	// 	description: 'The tweet to unretweet',
+	// 	displayOptions: {
+	// 		show: {
+	// 			operation: ['unretweet'],
+	// 			resource: ['tweet'],
+	// 		},
+	// 	},
+	// 	modes: [
+	// 		{
+	// 			displayName: 'By ID',
+	// 			name: 'id',
+	// 			type: 'string',
+	// 			validation: [],
+	// 			placeholder: 'e.g. 1187836157394112513',
+	// 			url: '',
+	// 		},
+	// 		{
+	// 			displayName: 'By URL',
+	// 			name: 'url',
+	// 			type: 'string',
+	// 			validation: [],
+	// 			placeholder: 'e.g. https://twitter.com/n8n_io/status/1187836157394112513',
+	// 			url: '',
+	// 		},
+	// 	],
+	// },
 
 	/* -------------------------------------------------------------------------- */
 	/*                                tweet:delete                                */
 	/* -------------------------------------------------------------------------- */
-	{
-		displayName: 'Tweet',
-		name: 'tweetId',
-		type: 'resourceLocator',
-		default: { mode: 'id', value: '' },
-		required: true,
-		description: 'The tweet to delete',
-		displayOptions: {
-			show: {
-				operation: ['delete'],
-				resource: ['tweet'],
-			},
-		},
-		modes: [
-			{
-				displayName: 'By ID',
-				name: 'id',
-				type: 'string',
-				validation: [],
-				placeholder: 'e.g. 1187836157394112513',
-				url: '',
-			},
-			{
-				displayName: 'By URL',
-				name: 'url',
-				type: 'string',
-				validation: [],
-				placeholder: 'e.g. https://twitter.com/n8n_io/status/1187836157394112513',
-				url: '',
-			},
-		],
-	},
+	// {
+	// 	displayName: 'Tweet',
+	// 	name: 'tweetId',
+	// 	type: 'resourceLocator',
+	// 	default: { mode: 'id', value: '' },
+	// 	required: true,
+	// 	description: 'The tweet to delete',
+	// 	displayOptions: {
+	// 		show: {
+	// 			operation: ['delete'],
+	// 			resource: ['tweet'],
+	// 		},
+	// 	},
+	// 	modes: [
+	// 		{
+	// 			displayName: 'By ID',
+	// 			name: 'id',
+	// 			type: 'string',
+	// 			validation: [],
+	// 			placeholder: 'e.g. 1187836157394112513',
+	// 			url: '',
+	// 		},
+	// 		{
+	// 			displayName: 'By URL',
+	// 			name: 'url',
+	// 			type: 'string',
+	// 			validation: [],
+	// 			placeholder: 'e.g. https://twitter.com/n8n_io/status/1187836157394112513',
+	// 			url: '',
+	// 		},
+	// 	],
+	// },
 
 	/* -------------------------------------------------------------------------- */
 	/*                                tweet:search                                */
 	/* -------------------------------------------------------------------------- */
-	{
-		displayName: 'Search Text',
-		name: 'searchText',
-		type: 'string',
-		default: '',
-		placeholder: 'e.g. automation',
-		displayOptions: {
-			show: {
-				operation: ['search'],
-				resource: ['tweet'],
-			},
-		},
-		description: 'The text to search for',
-	},
-	{
-		displayName: 'Limit',
-		name: 'limit',
-		description: 'Max number of results to return',
-		type: 'number',
-		// eslint-disable-next-line n8n-nodes-base/node-param-default-wrong-for-limit
-		default: 20,
-		typeOptions: {
-			minValue: 1,
-		},
-		displayOptions: {
-			show: {
-				resource: ['tweet'],
-				operation: ['search'],
-			},
-		},
-	},
-	{
-		displayName: 'Options',
-		name: 'additionalFields',
-		type: 'collection',
-		placeholder: 'Add Field',
-		default: {},
-		displayOptions: {
-			show: {
-				operation: ['search'],
-				resource: ['tweet'],
-			},
-		},
-		options: [
-			{
-				displayName: 'After',
-				name: 'startTime',
-				type: 'dateTime',
-				default: '',
-				description: 'Tweets before this date will not be returned',
-			},
-			{
-				displayName: 'Before',
-				name: 'endTime',
-				type: 'dateTime',
-				default: '',
-				description: 'Tweets after this date will not be returned',
-			},
+	// {
+	// 	displayName: 'Search Text',
+	// 	name: 'searchText',
+	// 	type: 'string',
+	// 	default: '',
+	// 	placeholder: 'e.g. automation',
+	// 	displayOptions: {
+	// 		show: {
+	// 			operation: ['search'],
+	// 			resource: ['tweet'],
+	// 		},
+	// 	},
+	// 	description: 'The text to search for',
+	// },
+	// {
+	// 	displayName: 'Limit',
+	// 	name: 'limit',
+	// 	description: 'Max number of results to return',
+	// 	type: 'number',
+	// 	// eslint-disable-next-line n8n-nodes-base/node-param-default-wrong-for-limit
+	// 	default: 20,
+	// 	typeOptions: {
+	// 		minValue: 1,
+	// 	},
+	// 	displayOptions: {
+	// 		show: {
+	// 			resource: ['tweet'],
+	// 			operation: ['search'],
+	// 		},
+	// 	},
+	// },
+	// {
+	// 	displayName: 'Options',
+	// 	name: 'additionalFields',
+	// 	type: 'collection',
+	// 	placeholder: 'Add Field',
+	// 	default: {},
+	// 	displayOptions: {
+	// 		show: {
+	// 			operation: ['search'],
+	// 			resource: ['tweet'],
+	// 		},
+	// 	},
+	// 	options: [
+	// 		{
+	// 			displayName: 'After',
+	// 			name: 'startTime',
+	// 			type: 'dateTime',
+	// 			default: '',
+	// 			description: 'Tweets before this date will not be returned',
+	// 		},
+	// 		{
+	// 			displayName: 'Before',
+	// 			name: 'endTime',
+	// 			type: 'dateTime',
+	// 			default: '',
+	// 			description: 'Tweets after this date will not be returned',
+	// 		},
 
-			{
-				displayName: 'From Users',
-				name: 'fromUsers',
-				type: 'string',
-				default: '',
-				description: 'A comma-separated list of usernames, without the @ symbol',
-			},
-			{
-				displayName: 'Search Top Tweets',
-				name: 'top',
-				type: 'boolean',
-				default: true,
-				description: 'Whether to search for top (most popular) tweets instead of recent tweets',
-			},
-		],
-	},
+	// 		{
+	// 			displayName: 'From Users',
+	// 			name: 'fromUsers',
+	// 			type: 'string',
+	// 			default: '',
+	// 			description: 'A comma-separated list of usernames, without the @ symbol',
+	// 		},
+	// 		{
+	// 			displayName: 'Search Top Tweets',
+	// 			name: 'top',
+	// 			type: 'boolean',
+	// 			default: true,
+	// 			description: 'Whether to search for top (most popular) tweets instead of recent tweets',
+	// 		},
+	// 	],
+	// },
 ];

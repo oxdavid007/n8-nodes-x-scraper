@@ -8,6 +8,14 @@ export class XScraperCredentialsApi implements ICredentialType {
 
 	properties: INodeProperties[] = [
 		{
+			displayName: 'Username',
+			name: 'username',
+			type: 'string',
+			required: true,
+			default: '',
+			description: 'The username for X authentication',
+		},
+		{
 			displayName: 'Guest ID',
 			name: 'guest_id',
 			type: 'string',

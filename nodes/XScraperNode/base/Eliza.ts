@@ -1,10 +1,16 @@
 import { Scraper } from 'agent-twitter-client';
-import { CreateTwitterUserWithCookiesDto } from './CreateTwitterUserWithCookiesDto';
+import { CreateTwitterUserWithCookiesDto } from './utils';
 
 interface CreateTweetResponse {
 	// Add response type properties here
 	errors?: Array<{ message: string }>;
 }
+
+type DirectMessagesResponse = {
+	conversations: Array<{
+		[key: string]: any;
+	}>;
+};
 
 export class Eliza {
 	private scrapers: Map<string, Scraper>;
@@ -74,15 +80,7 @@ export class Eliza {
 			throw new Error('Scraper not found');
 		}
 		try {
-			console.log(
-				'🚀 ~ Eliza ~ content, replyToTweetId, mediaData:',
-				content,
-				replyToTweetId,
-				mediaData,
-			);
-
 			const rs = await scraper.sendLongTweet(content, replyToTweetId, mediaData);
-			console.log('🚀 ~ Eliza ~ rs:', rs);
 			const json = await rs.json();
 
 			if (json.errors) {
@@ -97,6 +95,55 @@ export class Eliza {
 				throw new Error(json.errors[0].message);
 			}
 			return json;
+		}
+	}
+
+	async getMessages(userId: string): Promise<DirectMessagesResponse> {
+		const keys = [...this.scrapers.keys()];
+
+		let scraper: Scraper | undefined;
+
+		if (keys.length === 1) {
+			scraper = this.scrapers.get(keys[0]);
+		} else {
+			const randomKey = keys[Math.floor(Math.random() * keys.length)];
+			scraper = this.scrapers.get(randomKey);
+		}
+		if (!scraper) {
+			throw new Error('Scraper not found');
+		}
+		try {
+			const rs = await scraper.getDirectMessageConversations(userId);
+
+			return rs;
+		} catch (error) {
+			if (error instanceof Error) {
+				throw new Error(`Failed to get messages: ${error.message}`);
+			}
+			throw new Error('Failed to get messages: Unknown error');
+		}
+	}
+
+	async like(tweetId: string): Promise<void> {
+		const keys = [...this.scrapers.keys()];
+		let scraper: Scraper | undefined;
+
+		if (keys.length === 1) {
+			scraper = this.scrapers.get(keys[0]);
+		} else {
+			const randomKey = keys[Math.floor(Math.random() * keys.length)];
+			scraper = this.scrapers.get(randomKey);
+		}
+		if (!scraper) {
+			throw new Error('Scraper not found');
+		}
+		try {
+			await scraper.likeTweet(tweetId);
+		} catch (error) {
+			if (error instanceof Error) {
+				throw new Error(`Failed to like tweet: ${error.message}`);
+			}
+			throw new Error('Failed to like tweet: Unknown error');
 		}
 	}
 }
