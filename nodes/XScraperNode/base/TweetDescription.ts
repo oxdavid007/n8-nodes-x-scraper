@@ -25,22 +25,16 @@ export const tweetOperations: INodeProperties[] = [
 				action: 'Like tweet',
 			},
 			{
-				name: 'Search',
-				value: 'search',
-				description: 'Search for tweets',
-				action: 'Search tweets',
+				name: 'Retweet',
+				value: 'retweet',
+				description: 'Retweet a tweet',
+				action: 'Retweet tweet',
 			},
 			// {
 			// 	name: 'Delete',
 			// 	value: 'delete',
 			// 	description: 'Delete a tweet',
 			// 	action: 'Delete tweet',
-			// },
-			// {
-			// 	name: 'Retweet',
-			// 	value: 'retweet',
-			// 	description: 'Retweet a tweet',
-			// 	action: 'Retweet tweet',
 			// },
 			// {
 			// 	name: 'Unlike',
@@ -157,38 +151,38 @@ export const tweetFields: INodeProperties[] = [
 	/* -------------------------------------------------------------------------- */
 	/*                                tweet:retweet                               */
 	/* -------------------------------------------------------------------------- */
-	// {
-	// 	displayName: 'Tweet',
-	// 	name: 'tweetId',
-	// 	type: 'resourceLocator',
-	// 	default: { mode: 'id', value: '' },
-	// 	required: true,
-	// 	description: 'The tweet to retweet',
-	// 	displayOptions: {
-	// 		show: {
-	// 			operation: ['retweet'],
-	// 			resource: ['tweet'],
-	// 		},
-	// 	},
-	// 	modes: [
-	// 		{
-	// 			displayName: 'By ID',
-	// 			name: 'id',
-	// 			type: 'string',
-	// 			validation: [],
-	// 			placeholder: 'e.g. 1187836157394112513',
-	// 			url: '',
-	// 		},
-	// 		{
-	// 			displayName: 'By URL',
-	// 			name: 'url',
-	// 			type: 'string',
-	// 			validation: [],
-	// 			placeholder: 'e.g. https://twitter.com/n8n_io/status/1187836157394112513',
-	// 			url: '',
-	// 		},
-	// 	],
-	// },
+	{
+		displayName: 'Tweet',
+		name: 'tweetId',
+		type: 'resourceLocator',
+		default: { mode: 'id', value: '' },
+		required: true,
+		description: 'The tweet to retweet',
+		displayOptions: {
+			show: {
+				operation: ['retweet'],
+				resource: ['tweet'],
+			},
+		},
+		modes: [
+			{
+				displayName: 'By ID',
+				name: 'id',
+				type: 'string',
+				validation: [],
+				placeholder: 'e.g. 1187836157394112513',
+				url: '',
+			},
+			{
+				displayName: 'By URL',
+				name: 'url',
+				type: 'string',
+				validation: [],
+				placeholder: 'e.g. https://x.com/n8n_io/status/1187836157394112513',
+				url: '',
+			},
+		],
+	},
 
 	/* -------------------------------------------------------------------------- */
 	/*                                tweet:like                                  */
@@ -337,34 +331,34 @@ export const tweetFields: INodeProperties[] = [
 	/* -------------------------------------------------------------------------- */
 	/*                                tweet:search                                */
 	/* -------------------------------------------------------------------------- */
-	{
-		displayName: 'Search Text',
-		name: 'searchText',
-		type: 'string',
-		default: '',
-		placeholder: 'e.g. automation',
-		displayOptions: {
-			show: {
-				operation: ['search'],
-				resource: ['tweet'],
-			},
-		},
-		description: 'The text to search for',
-	},
-	{
-		displayName: 'Limit',
-		name: 'limit',
-		description: 'Max number of results to return',
-		type: 'number',
-		default: 20,
-		typeOptions: {
-			minValue: 1,
-		},
-		displayOptions: {
-			show: {
-				resource: ['tweet'],
-				operation: ['search'],
-			},
-		},
-	},
+	// {
+	// 	displayName: 'Search Text',
+	// 	name: 'searchText',
+	// 	type: 'string',
+	// 	default: '',
+	// 	placeholder: 'e.g. automation',
+	// 	displayOptions: {
+	// 		show: {
+	// 			operation: ['search'],
+	// 			resource: ['tweet'],
+	// 		},
+	// 	},
+	// 	description: 'The text to search for',
+	// },
+	// {
+	// 	displayName: 'Limit',
+	// 	name: 'limit',
+	// 	description: 'Max number of results to return',
+	// 	type: 'number',
+	// 	default: 20,
+	// 	typeOptions: {
+	// 		minValue: 1,
+	// 	},
+	// 	displayOptions: {
+	// 		show: {
+	// 			resource: ['tweet'],
+	// 			operation: ['search'],
+	// 		},
+	// 	},
+	// },
 ];

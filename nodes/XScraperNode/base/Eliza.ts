@@ -168,6 +168,18 @@ export class Eliza {
 		}
 	}
 
+	async retweet(tweetId: string): Promise<void> {
+		const scraper = this.getRandomScraper();
+		try {
+			await scraper.retweet(tweetId);
+		} catch (error) {
+			if (error instanceof Error) {
+				throw new Error(`Failed to retweet: ${error.message}`);
+			}
+			throw new Error('Failed to retweet: Unknown error');
+		}
+	}
+
 	async getUser(username: string): Promise<Profile> {
 		const scraper = this.getRandomScraper();
 		try {
@@ -195,23 +207,6 @@ export class Eliza {
 				throw new Error(`Failed to get tweets: ${error.message}`);
 			}
 			throw new Error('Failed to get tweets: Unknown error');
-		}
-	}
-
-	async search(keyword: string, limit: number = 20): Promise<Tweet[]> {
-		const scraper = this.getRandomScraper();
-		try {
-			const tweetsGenerator = await scraper.searchTweets(keyword, limit);
-			const tweets: Tweet[] = [];
-			for await (const tweet of tweetsGenerator) {
-				tweets.push(tweet);
-			}
-			return tweets;
-		} catch (error) {
-			if (error instanceof Error) {
-				throw new Error(`Failed to search tweets: ${error.message}`);
-			}
-			throw new Error('Failed to search tweets: Unknown error');
 		}
 	}
 }

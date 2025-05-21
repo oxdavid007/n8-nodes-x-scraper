@@ -155,10 +155,18 @@ export class XScraperNode implements INodeType {
 							responseData = 'Tweet has been successfully liked';
 						}
 
-						if (operation === 'search') {
-							const searchText = this.getNodeParameter('searchText', i) as string;
-							const limit = this.getNodeParameter('limit', i) as number;
-							responseData = await eliza.search(searchText, limit);
+						if (operation === 'retweet') {
+							const tweetRLC = this.getNodeParameter(
+								'tweetId',
+								i,
+								'',
+								{},
+							) as INodeParameterResourceLocator;
+
+							const tweetId = returnId(tweetRLC);
+
+							await eliza.retweet(tweetId);
+							responseData = 'Tweet has been successfully retweeted';
 						}
 					}
 
