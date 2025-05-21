@@ -106,6 +106,7 @@ export class XScraperNode implements INodeType {
 			await eliza.createUserWithCookies(userData);
 
 			console.log('🚀 ~ XScraperNode ~ resource ~', resource);
+			console.log('🚀 ~ XScraperNode ~ operation ~', operation);
 
 			for (let i = 0; i < length; i++) {
 				try {
@@ -136,7 +137,6 @@ export class XScraperNode implements INodeType {
 								];
 							}
 							responseData = await eliza.post(text, replyToTweetId, mediaData);
-							console.log('🚀 ~ XScraperNode ~ execute ~ responseData:', responseData);
 						}
 						if (operation === 'like') {
 							const tweetRLC = this.getNodeParameter(
@@ -155,7 +155,24 @@ export class XScraperNode implements INodeType {
 
 					if (resource === 'user') {
 						if (operation === 'getUser') {
-							responseData = 'User operation not implemented yet';
+							const username = this.getNodeParameter(
+								'user',
+								i,
+								'',
+								{},
+							) as INodeParameterResourceLocator;
+							responseData = await eliza.getUser(username.value as string);
+						}
+
+						if (operation === 'getTweets') {
+							const username = this.getNodeParameter(
+								'user',
+								i,
+								'',
+								{},
+							) as INodeParameterResourceLocator;
+							const limit = this.getNodeParameter('limit', i) as number;
+							responseData = await eliza.getTweetsByUsername(username.value as string, limit);
 						}
 
 						if (operation === 'getTimeline') {
@@ -172,7 +189,6 @@ export class XScraperNode implements INodeType {
 						this.helpers.returnJsonArray(responseData as unknown as IDataObject[]),
 						{ itemData: { item: i } },
 					);
-
 					returnData.push(...executionData);
 				} catch (error) {
 					if (this.continueOnFail()) {

@@ -1,4 +1,4 @@
-import { Scraper } from 'agent-twitter-client';
+import { Profile, Scraper, Tweet } from 'agent-twitter-client';
 import { CreateTwitterUserWithCookiesDto } from './utils';
 
 interface CreateTweetResponse {
@@ -17,6 +17,22 @@ export class Eliza {
 
 	constructor() {
 		this.scrapers = new Map();
+	}
+
+	private getRandomScraper(): Scraper {
+		const keys = [...this.scrapers.keys()];
+		let scraper: Scraper | undefined;
+
+		if (keys.length === 1) {
+			scraper = this.scrapers.get(keys[0]);
+		} else {
+			const randomKey = keys[Math.floor(Math.random() * keys.length)];
+			scraper = this.scrapers.get(randomKey);
+		}
+		if (!scraper) {
+			throw new Error('Scraper not found');
+		}
+		return scraper;
 	}
 
 	async createUserWithCookies(data: CreateTwitterUserWithCookiesDto) {
@@ -66,19 +82,7 @@ export class Eliza {
 			throw new Error('Content is required');
 		}
 
-		const keys = [...this.scrapers.keys()];
-
-		let scraper: Scraper | undefined;
-
-		if (keys.length === 1) {
-			scraper = this.scrapers.get(keys[0]);
-		} else {
-			const randomKey = keys[Math.floor(Math.random() * keys.length)];
-			scraper = this.scrapers.get(randomKey);
-		}
-		if (!scraper) {
-			throw new Error('Scraper not found');
-		}
+		const scraper = this.getRandomScraper();
 		try {
 			const rs = await scraper.sendLongTweet(content, replyToTweetId, mediaData);
 			const json = await rs.json();
@@ -99,22 +103,9 @@ export class Eliza {
 	}
 
 	async getMessages(userId: string): Promise<DirectMessagesResponse> {
-		const keys = [...this.scrapers.keys()];
-
-		let scraper: Scraper | undefined;
-
-		if (keys.length === 1) {
-			scraper = this.scrapers.get(keys[0]);
-		} else {
-			const randomKey = keys[Math.floor(Math.random() * keys.length)];
-			scraper = this.scrapers.get(randomKey);
-		}
-		if (!scraper) {
-			throw new Error('Scraper not found');
-		}
+		const scraper = this.getRandomScraper();
 		try {
 			const rs = await scraper.getDirectMessageConversations(userId);
-
 			return rs;
 		} catch (error) {
 			if (error instanceof Error) {
@@ -125,18 +116,7 @@ export class Eliza {
 	}
 
 	async like(tweetId: string): Promise<void> {
-		const keys = [...this.scrapers.keys()];
-		let scraper: Scraper | undefined;
-
-		if (keys.length === 1) {
-			scraper = this.scrapers.get(keys[0]);
-		} else {
-			const randomKey = keys[Math.floor(Math.random() * keys.length)];
-			scraper = this.scrapers.get(randomKey);
-		}
-		if (!scraper) {
-			throw new Error('Scraper not found');
-		}
+		const scraper = this.getRandomScraper();
 		try {
 			await scraper.likeTweet(tweetId);
 		} catch (error) {
@@ -144,6 +124,36 @@ export class Eliza {
 				throw new Error(`Failed to like tweet: ${error.message}`);
 			}
 			throw new Error('Failed to like tweet: Unknown error');
+		}
+	}
+
+	async getUser(username: string): Promise<Profile> {
+		const scraper = this.getRandomScraper();
+		try {
+			const user = await scraper.getProfile(username);
+			return user;
+		} catch (error) {
+			if (error instanceof Error) {
+				throw new Error(`Failed to get user: ${error.message}`);
+			}
+			throw new Error('Failed to get user: Unknown error');
+		}
+	}
+
+	async getTweetsByUsername(username: string, limit: number = 20): Promise<Tweet[]> {
+		const scraper = this.getRandomScraper();
+		try {
+			const tweetsGenerator = await scraper.getTweets(username, limit);
+			const tweets: Tweet[] = [];
+			for await (const tweet of tweetsGenerator) {
+				tweets.push(tweet);
+			}
+			return tweets;
+		} catch (error) {
+			if (error instanceof Error) {
+				throw new Error(`Failed to get tweets: ${error.message}`);
+			}
+			throw new Error('Failed to get tweets: Unknown error');
 		}
 	}
 }

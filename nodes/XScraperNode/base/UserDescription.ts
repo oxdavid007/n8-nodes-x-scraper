@@ -12,18 +12,18 @@ export const userOperations: INodeProperties[] = [
 			},
 		},
 		options: [
-			// {
-			// 	name: 'Get',
-			// 	value: 'getUser',
-			// 	description: 'Retrieve a user by username',
-			// 	action: 'Get user',
-			// },
-			// {
-			// 	name: 'Get Timeline',
-			// 	value: 'getTimeline',
-			// 	description: "Retrieve a user's timeline",
-			// 	action: 'Get user timeline',
-			// },
+			{
+				name: 'Get',
+				value: 'getUser',
+				description: 'Retrieve a user by username',
+				action: 'Get user',
+			},
+			{
+				name: 'Get Tweets',
+				value: 'getTweets',
+				description: "Retrieve a user's tweets",
+				action: 'Get user tweets',
+			},
 			{
 				name: 'Get Messages',
 				value: 'getMessages',
@@ -48,7 +48,7 @@ export const userFields: INodeProperties[] = [
 		description: 'The user you want to search',
 		displayOptions: {
 			show: {
-				operation: ['getUser'],
+				operation: ['getUser', 'getTweets'],
 				resource: ['user'],
 			},
 		},
@@ -62,6 +62,26 @@ export const userFields: INodeProperties[] = [
 				url: '',
 			},
 		],
+	},
+
+	/* -------------------------------------------------------------------------- */
+	/*                                user:getTweets                        */
+	/* -------------------------------------------------------------------------- */
+	{
+		displayName: 'Limit',
+		name: 'limit',
+		description: 'Max number of tweets to return',
+		type: 'number',
+		default: 20,
+		typeOptions: {
+			minValue: 1,
+		},
+		displayOptions: {
+			show: {
+				operation: ['getTweets'],
+				resource: ['user'],
+			},
+		},
 	},
 
 	/* -------------------------------------------------------------------------- */
