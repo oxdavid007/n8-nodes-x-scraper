@@ -1,6 +1,6 @@
 {
   "name": "n8n-nodes-x-scraper",
-  "version": "1.1.2",
+  "version": "1.1.3",
   "description": "",
   "keywords": [
     "n8n-community-node-package"
@@ -9,7 +9,7 @@
   "homepage": "",
   "author": {
     "name": "Scraper AI by Lab3",
-    "email": "hello@lab3.ai"
+    "email": "support@lab3.ai"
   },
   "repository": {
     "type": "git",

@@ -154,6 +154,12 @@ export class XScraperNode implements INodeType {
 							await eliza.like(tweetId);
 							responseData = 'Tweet has been successfully liked';
 						}
+
+						if (operation === 'search') {
+							const searchText = this.getNodeParameter('searchText', i) as string;
+							const limit = this.getNodeParameter('limit', i) as number;
+							responseData = await eliza.search(searchText, limit);
+						}
 					}
 
 					if (resource === 'user') {

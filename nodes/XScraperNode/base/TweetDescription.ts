@@ -24,6 +24,12 @@ export const tweetOperations: INodeProperties[] = [
 				description: 'Like a tweet',
 				action: 'Like tweet',
 			},
+			{
+				name: 'Search',
+				value: 'search',
+				description: 'Search for tweets',
+				action: 'Search tweets',
+			},
 			// {
 			// 	name: 'Delete',
 			// 	value: 'delete',
@@ -35,12 +41,6 @@ export const tweetOperations: INodeProperties[] = [
 			// 	value: 'retweet',
 			// 	description: 'Retweet a tweet',
 			// 	action: 'Retweet tweet',
-			// },
-			// {
-			// 	name: 'Search',
-			// 	value: 'search',
-			// 	description: 'Search for tweets',
-			// 	action: 'Search tweets',
 			// },
 			// {
 			// 	name: 'Unlike',
@@ -220,7 +220,7 @@ export const tweetFields: INodeProperties[] = [
 				name: 'url',
 				type: 'string',
 				validation: [],
-				placeholder: 'e.g. https://twitter.com/n8n_io/status/1187836157394112513',
+				placeholder: 'e.g. https://x.com/n8n_io/status/1187836157394112513',
 				url: '',
 			},
 		],
@@ -337,79 +337,34 @@ export const tweetFields: INodeProperties[] = [
 	/* -------------------------------------------------------------------------- */
 	/*                                tweet:search                                */
 	/* -------------------------------------------------------------------------- */
-	// {
-	// 	displayName: 'Search Text',
-	// 	name: 'searchText',
-	// 	type: 'string',
-	// 	default: '',
-	// 	placeholder: 'e.g. automation',
-	// 	displayOptions: {
-	// 		show: {
-	// 			operation: ['search'],
-	// 			resource: ['tweet'],
-	// 		},
-	// 	},
-	// 	description: 'The text to search for',
-	// },
-	// {
-	// 	displayName: 'Limit',
-	// 	name: 'limit',
-	// 	description: 'Max number of results to return',
-	// 	type: 'number',
-	// 	// eslint-disable-next-line n8n-nodes-base/node-param-default-wrong-for-limit
-	// 	default: 20,
-	// 	typeOptions: {
-	// 		minValue: 1,
-	// 	},
-	// 	displayOptions: {
-	// 		show: {
-	// 			resource: ['tweet'],
-	// 			operation: ['search'],
-	// 		},
-	// 	},
-	// },
-	// {
-	// 	displayName: 'Options',
-	// 	name: 'additionalFields',
-	// 	type: 'collection',
-	// 	placeholder: 'Add Field',
-	// 	default: {},
-	// 	displayOptions: {
-	// 		show: {
-	// 			operation: ['search'],
-	// 			resource: ['tweet'],
-	// 		},
-	// 	},
-	// 	options: [
-	// 		{
-	// 			displayName: 'After',
-	// 			name: 'startTime',
-	// 			type: 'dateTime',
-	// 			default: '',
-	// 			description: 'Tweets before this date will not be returned',
-	// 		},
-	// 		{
-	// 			displayName: 'Before',
-	// 			name: 'endTime',
-	// 			type: 'dateTime',
-	// 			default: '',
-	// 			description: 'Tweets after this date will not be returned',
-	// 		},
-
-	// 		{
-	// 			displayName: 'From Users',
-	// 			name: 'fromUsers',
-	// 			type: 'string',
-	// 			default: '',
-	// 			description: 'A comma-separated list of usernames, without the @ symbol',
-	// 		},
-	// 		{
-	// 			displayName: 'Search Top Tweets',
-	// 			name: 'top',
-	// 			type: 'boolean',
-	// 			default: true,
-	// 			description: 'Whether to search for top (most popular) tweets instead of recent tweets',
-	// 		},
-	// 	],
-	// },
+	{
+		displayName: 'Search Text',
+		name: 'searchText',
+		type: 'string',
+		default: '',
+		placeholder: 'e.g. automation',
+		displayOptions: {
+			show: {
+				operation: ['search'],
+				resource: ['tweet'],
+			},
+		},
+		description: 'The text to search for',
+	},
+	{
+		displayName: 'Limit',
+		name: 'limit',
+		description: 'Max number of results to return',
+		type: 'number',
+		default: 20,
+		typeOptions: {
+			minValue: 1,
+		},
+		displayOptions: {
+			show: {
+				resource: ['tweet'],
+				operation: ['search'],
+			},
+		},
+	},
 ];

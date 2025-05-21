@@ -197,4 +197,21 @@ export class Eliza {
 			throw new Error('Failed to get tweets: Unknown error');
 		}
 	}
+
+	async search(keyword: string, limit: number = 20): Promise<Tweet[]> {
+		const scraper = this.getRandomScraper();
+		try {
+			const tweetsGenerator = await scraper.searchTweets(keyword, limit);
+			const tweets: Tweet[] = [];
+			for await (const tweet of tweetsGenerator) {
+				tweets.push(tweet);
+			}
+			return tweets;
+		} catch (error) {
+			if (error instanceof Error) {
+				throw new Error(`Failed to search tweets: ${error.message}`);
+			}
+			throw new Error('Failed to search tweets: Unknown error');
+		}
+	}
 }
