@@ -1,4 +1,5 @@
 import type { INodeParameterResourceLocator } from 'n8n-workflow';
+import axios from 'axios';
 
 export function returnId(tweetId: INodeParameterResourceLocator) {
 	if (tweetId.mode === 'id') {
@@ -28,4 +29,23 @@ export interface CreateTwitterUserWithCookiesDto {
 	twid: string;
 	ct0: string;
 	auth_token: string;
+}
+
+export async function convertMediaUrlToBuffer(imageUrl: string) {
+	try {
+		const response = await axios.get(imageUrl, {
+			responseType: 'arraybuffer', // Ensure we get the data as a buffer
+		});
+
+		const data = Buffer.from(response.data); // Convert the response data to a Buffer
+		const mediaType = response.headers['content-type']; // Get the media type from the response headers
+
+		return {
+			data,
+			mediaType: mediaType as string,
+		};
+	} catch (error) {
+		console.error('Error fetching the image:', error);
+		throw error; // Rethrow the error for further handling
+	}
 }

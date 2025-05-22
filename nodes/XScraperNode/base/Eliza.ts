@@ -114,7 +114,7 @@ export class Eliza {
 		content: string,
 		replyToTweetId?: string,
 		mediaData?: {
-			data: Uint8Array;
+			data: Buffer;
 			mediaType: string;
 		}[],
 	): Promise<CreateTweetResponse> {
@@ -180,6 +180,24 @@ export class Eliza {
 		}
 	}
 
+	async quoteTweet(tweetId: string, content: string): Promise<CreateTweetResponse> {
+		const scraper = this.getRandomScraper();
+		try {
+			const rs = await scraper.sendQuoteTweet(content, tweetId);
+			const json = await rs.json();
+
+			if (json.errors) {
+				throw new Error(json.errors[0].message);
+			}
+			return json;
+		} catch (error) {
+			if (error instanceof Error) {
+				throw new Error(`Failed to quote tweet: ${error.message}`);
+			}
+			throw new Error('Failed to quote tweet: Unknown error');
+		}
+	}
+
 	async getUser(username: string): Promise<Profile> {
 		const scraper = this.getRandomScraper();
 		try {
@@ -207,6 +225,60 @@ export class Eliza {
 				throw new Error(`Failed to get tweets: ${error.message}`);
 			}
 			throw new Error('Failed to get tweets: Unknown error');
+		}
+	}
+
+	async getPendingMessages(
+		username: string,
+		numberFollower?: number,
+	): Promise<DirectMessagesResponse> {
+		const scraper = this.getRandomScraper();
+		try {
+			const user = await scraper.getProfile(username);
+			const rs = await scraper.getDirectMessageConversations(user.userId as string);
+
+			// Get all conversations
+			const conversations = rs.conversations;
+
+			// For each conversation, check if there are any messages
+			const pendingConversations = conversations.filter((conversation) => {
+				// Check if the conversation has any messages
+				if (!conversation.messages || conversation.messages.length === 0) {
+					return false;
+				}
+
+				// Get the first message's sender
+				const firstMessage = conversation.messages[0];
+				const firstSender = rs.users.find((u) => u.id === firstMessage.senderId);
+
+				// Check if sender exists and has enough followers
+				if (numberFollower !== undefined) {
+					if (
+						!firstSender ||
+						!firstSender.followersCount ||
+						firstSender.followersCount < numberFollower
+					) {
+						return false;
+					}
+				}
+
+				// Check if all messages in the conversation are from the same sender
+				const allMessagesFromSameSender = conversation.messages.every((message) => {
+					return message.senderId === firstMessage.senderId;
+				});
+
+				return allMessagesFromSameSender;
+			});
+
+			return {
+				...rs,
+				conversations: pendingConversations,
+			};
+		} catch (error) {
+			if (error instanceof Error) {
+				throw new Error(`Failed to get pending messages: ${error.message}`);
+			}
+			throw new Error('Failed to get pending messages: Unknown error');
 		}
 	}
 }

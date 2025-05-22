@@ -30,6 +30,12 @@ export const userOperations: INodeProperties[] = [
 				description: "Retrieve a user's messages",
 				action: 'Get user messages',
 			},
+			{
+				name: 'Get Pending Messages',
+				value: 'getPendingMessages',
+				description: "Retrieve a user's pending messages",
+				action: 'Get user pending messages',
+			},
 		],
 		default: 'getMessages',
 	},
@@ -88,30 +94,6 @@ export const userFields: INodeProperties[] = [
 	/*                                user:getTimeline                        */
 	/* -------------------------------------------------------------------------- */
 	{
-		displayName: 'User',
-		name: 'user',
-		type: 'resourceLocator',
-		default: { mode: 'username', value: '' },
-		required: true,
-		description: 'The user you want to search',
-		displayOptions: {
-			show: {
-				operation: ['getTimeline'],
-				resource: ['user'],
-			},
-		},
-		modes: [
-			{
-				displayName: 'By Username',
-				name: 'username',
-				type: 'string',
-				validation: [],
-				placeholder: 'e.g. n8n',
-				url: '',
-			},
-		],
-	},
-	{
 		displayName: 'Limit',
 		name: 'limit',
 		description: 'Max number of results to return',
@@ -124,6 +106,19 @@ export const userFields: INodeProperties[] = [
 		displayOptions: {
 			show: {
 				operation: ['getTimeline'],
+				resource: ['user'],
+			},
+		},
+	},
+	{
+		displayName: 'Minimum Follower Count',
+		name: 'numberFollower',
+		type: 'number',
+		default: 0,
+		description: 'Minimum number of followers required for the message sender',
+		displayOptions: {
+			show: {
+				operation: ['getPendingMessages'],
 				resource: ['user'],
 			},
 		},

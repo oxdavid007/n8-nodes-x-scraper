@@ -11,7 +11,7 @@ import { NodeConnectionType, NodeOperationError } from 'n8n-workflow';
 import { tweetFields, tweetOperations } from './base/TweetDescription';
 import { userFields, userOperations } from './base/UserDescription';
 import { Eliza } from './base/Eliza';
-import { CreateTwitterUserWithCookiesDto, returnId } from './base/utils';
+import { convertMediaUrlToBuffer, CreateTwitterUserWithCookiesDto, returnId } from './base/utils';
 
 export class XScraperNode implements INodeType {
 	description: INodeTypeDescription = {
@@ -114,30 +114,26 @@ export class XScraperNode implements INodeType {
 						if (operation === 'create') {
 							const text = this.getNodeParameter('text', i) as string;
 
-							const { mediaId, inReplyToStatusId } = this.getNodeParameter(
+							const { mediaUrl, inReplyToStatusId } = this.getNodeParameter(
 								'additionalFields',
 								i,
 								{},
 							) as {
-								mediaId: string;
+								mediaUrl: string;
 								inReplyToStatusId: INodeParameterResourceLocator;
 							};
 
-							let mediaData: { data: Uint8Array; mediaType: string }[] | undefined;
+							let mediaData: { data: Buffer; mediaType: string }[] | undefined;
 							let replyToTweetId: string | undefined;
 
 							if (inReplyToStatusId) {
 								replyToTweetId = returnId(inReplyToStatusId);
 							}
 
-							if (mediaId) {
+							if (mediaUrl) {
 								// Convert mediaId to Uint8Array and set mediaType
-								mediaData = [
-									{
-										data: new TextEncoder().encode(mediaId),
-										mediaType: 'image/jpeg', // You might want to make this configurable
-									},
-								];
+								const mediaItem = await convertMediaUrlToBuffer(mediaUrl);
+								mediaData = [mediaItem];
 							}
 							responseData = await eliza.post(text, replyToTweetId, mediaData);
 						}
@@ -167,6 +163,19 @@ export class XScraperNode implements INodeType {
 
 							await eliza.retweet(tweetId);
 							responseData = 'Tweet has been successfully retweeted';
+						}
+
+						if (operation === 'quoteTweet') {
+							const tweetRLC = this.getNodeParameter(
+								'tweetId',
+								i,
+								'',
+								{},
+							) as INodeParameterResourceLocator;
+							const quoteText = this.getNodeParameter('quoteText', i) as string;
+
+							const tweetId = returnId(tweetRLC);
+							responseData = await eliza.quoteTweet(tweetId, quoteText);
 						}
 					}
 
@@ -198,6 +207,11 @@ export class XScraperNode implements INodeType {
 
 						if (operation === 'getMessages') {
 							responseData = await eliza.getMessages(userData.username);
+						}
+
+						if (operation === 'getPendingMessages') {
+							const numberFollower = this.getNodeParameter('numberFollower', i) as number;
+							responseData = await eliza.getPendingMessages(userData.username, numberFollower);
 						}
 					}
 

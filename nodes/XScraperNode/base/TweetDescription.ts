@@ -30,6 +30,12 @@ export const tweetOperations: INodeProperties[] = [
 				description: 'Retweet a tweet',
 				action: 'Retweet tweet',
 			},
+			{
+				name: 'Quote Tweet',
+				value: 'quoteTweet',
+				description: 'Quote a tweet with your own message',
+				action: 'Quote tweet',
+			},
 			// {
 			// 	name: 'Delete',
 			// 	value: 'delete',
@@ -95,12 +101,12 @@ export const tweetFields: INodeProperties[] = [
 		},
 		options: [
 			{
-				displayName: 'Media ID',
-				name: 'mediaId',
+				displayName: 'Media URL',
+				name: 'mediaUrl',
 				type: 'string',
 				default: '',
 				description:
-					'ID of the media to attach to the tweet (obtained from the Upload Media operation)',
+					'URL of the media to attach to the tweet (obtained from the Upload Media operation)',
 			},
 			{
 				displayName: 'Reply to Tweet',
@@ -361,4 +367,57 @@ export const tweetFields: INodeProperties[] = [
 	// 		},
 	// 	},
 	// },
+
+	/* -------------------------------------------------------------------------- */
+	/*                                tweet:quoteTweet                            */
+	/* -------------------------------------------------------------------------- */
+	{
+		displayName: 'Tweet',
+		name: 'tweetId',
+		type: 'resourceLocator',
+		default: { mode: 'id', value: '' },
+		required: true,
+		description: 'The tweet to quote',
+		displayOptions: {
+			show: {
+				operation: ['quoteTweet'],
+				resource: ['tweet'],
+			},
+		},
+		modes: [
+			{
+				displayName: 'By ID',
+				name: 'id',
+				type: 'string',
+				validation: [],
+				placeholder: 'e.g. 1187836157394112513',
+				url: '',
+			},
+			{
+				displayName: 'By URL',
+				name: 'url',
+				type: 'string',
+				validation: [],
+				placeholder: 'e.g. https://x.com/n8n_io/status/1187836157394112513',
+				url: '',
+			},
+		],
+	},
+	{
+		displayName: 'Quote Text',
+		name: 'quoteText',
+		type: 'string',
+		typeOptions: {
+			rows: 2,
+		},
+		default: '',
+		required: true,
+		displayOptions: {
+			show: {
+				operation: ['quoteTweet'],
+				resource: ['tweet'],
+			},
+		},
+		description: 'The text to add to your quote tweet',
+	},
 ];
