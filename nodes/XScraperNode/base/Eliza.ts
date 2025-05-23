@@ -260,6 +260,13 @@ export class Eliza {
 				const firstMessage = conversation.messages[0];
 				const firstSender = rs.users.find((u) => u.id === firstMessage.senderId);
 
+				if (!firstSender) {
+					return false;
+				}
+				if (firstSender.screenName === username) {
+					return false;
+				}
+
 				// Check if sender exists and has enough followers
 				if (numberFollower !== undefined) {
 					if (
