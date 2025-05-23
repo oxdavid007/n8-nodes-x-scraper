@@ -404,7 +404,7 @@ export const tweetFields: INodeProperties[] = [
 		],
 	},
 	{
-		displayName: 'Quote Text',
+		displayName: 'Text',
 		name: 'quoteText',
 		type: 'string',
 		typeOptions: {
@@ -419,5 +419,29 @@ export const tweetFields: INodeProperties[] = [
 			},
 		},
 		description: 'The text to add to your quote tweet',
+	},
+
+	{
+		displayName: 'Options',
+		name: 'additionalFields',
+		type: 'collection',
+		placeholder: 'Add Field',
+		default: {},
+		displayOptions: {
+			show: {
+				operation: ['quoteTweet'],
+				resource: ['tweet'],
+			},
+		},
+		options: [
+			{
+				displayName: 'Media URL',
+				name: 'mediaUrl',
+				type: 'string',
+				default: '',
+				description:
+					'URL of the media to attach to the tweet (obtained from the Upload Media operation)',
+			},
+		],
 	},
 ];

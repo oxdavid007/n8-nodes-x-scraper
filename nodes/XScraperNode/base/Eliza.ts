@@ -180,10 +180,19 @@ export class Eliza {
 		}
 	}
 
-	async quoteTweet(tweetId: string, content: string): Promise<CreateTweetResponse> {
+	async quoteTweet(
+		tweetId: string,
+		content: string,
+		mediaData?: {
+			data: Buffer;
+			mediaType: string;
+		}[],
+	): Promise<CreateTweetResponse> {
 		const scraper = this.getRandomScraper();
 		try {
-			const rs = await scraper.sendQuoteTweet(content, tweetId);
+			const rs = await scraper.sendQuoteTweet(content, tweetId, {
+				mediaData: mediaData || [],
+			});
 			const json = await rs.json();
 
 			if (json.errors) {

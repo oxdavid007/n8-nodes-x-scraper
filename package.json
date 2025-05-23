@@ -1,6 +1,6 @@
 {
   "name": "n8n-nodes-x-scraper",
-  "version": "2.0.1",
+  "version": "2.0.2",
   "description": "Scrape X Data with Lab3",
   "keywords": [
     "n8n-community-node-package"

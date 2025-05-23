@@ -122,7 +122,6 @@ export class XScraperNode implements INodeType {
 								mediaUrl: string;
 								inReplyToStatusId: INodeParameterResourceLocator;
 							};
-
 							let mediaData: { data: Buffer; mediaType: string }[] | undefined;
 							let replyToTweetId: string | undefined;
 
@@ -174,8 +173,18 @@ export class XScraperNode implements INodeType {
 							) as INodeParameterResourceLocator;
 							const quoteText = this.getNodeParameter('quoteText', i) as string;
 
+							const { mediaUrl } = this.getNodeParameter('additionalFields', i, {}) as {
+								mediaUrl: string;
+							};
+							let mediaData: { data: Buffer; mediaType: string }[] | undefined;
+
+							if (mediaUrl) {
+								// Convert mediaId to Uint8Array and set mediaType
+								const mediaItem = await convertMediaUrlToBuffer(mediaUrl);
+								mediaData = [mediaItem];
+							}
 							const tweetId = returnId(tweetRLC);
-							responseData = await eliza.quoteTweet(tweetId, quoteText);
+							responseData = await eliza.quoteTweet(tweetId, quoteText, mediaData);
 						}
 					}
 
